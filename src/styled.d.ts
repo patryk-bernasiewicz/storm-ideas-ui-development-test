@@ -5,10 +5,12 @@ declare module 'styled-components' {
     borderRadius: string;
     palette: {
       white: string;
-      blue: string;
       green: string;
       red: string;
       steelBlue: string;
+
+      blue100: string;
+      blue200: string;
 
       gray50: string;
       gray70: string;
@@ -16,6 +18,7 @@ declare module 'styled-components' {
       gray200: string;
       gray300: string;
       gray400: string;
+      gray800: string;
     };
     fontSizes: {
       default: string;
