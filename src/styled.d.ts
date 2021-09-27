@@ -9,6 +9,7 @@ declare module 'styled-components' {
       red: string;
       steelBlue: string;
 
+      blue50: string;
       blue100: string;
       blue200: string;
 
@@ -18,6 +19,9 @@ declare module 'styled-components' {
       gray200: string;
       gray300: string;
       gray400: string;
+      gray500: string;
+      gray600: string;
+      gray700: string;
       gray800: string;
     };
     fontSizes: {

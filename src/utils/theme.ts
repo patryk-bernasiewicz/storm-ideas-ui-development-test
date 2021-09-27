@@ -4,6 +4,7 @@ export const defaultTheme: DefaultTheme = {
   borderRadius: '3px',
   palette: {
     white: '#FFFFFF',
+    blue50: '#58C1DB',
     blue100: '#38A0B9',
     blue200: '#154E6E',
     green: '#5BA462',
@@ -15,7 +16,10 @@ export const defaultTheme: DefaultTheme = {
     gray100: '#A3A3A3',
     gray200: '#7C7C7C',
     gray300: '#4D4D4D',
-    gray400: '#444647',
+    gray400: '#484848',
+    gray500: '#444647',
+    gray600: '#38373F',
+    gray700: '#2E2D34',
     gray800: '#232329',
   },
   fontSizes: {

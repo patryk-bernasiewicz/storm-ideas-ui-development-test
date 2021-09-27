@@ -34,7 +34,7 @@ export const StyledTable = styled(Table)<{ isLoading?: boolean }>`
 
   .rc-table-tbody {
     .rc-table-cell {
-      color: ${({ theme }) => theme.palette.gray400};
+      color: ${({ theme }) => theme.palette.gray500};
       font-size: ${({ theme }) => theme.fontSizes.small};
       padding: 16px;
     }
