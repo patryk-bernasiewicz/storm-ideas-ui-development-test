@@ -2,13 +2,19 @@ import styled, { css } from 'styled-components';
 import Table from 'rc-table';
 
 export const StyledTable = styled(Table)<{ isLoading?: boolean }>`
-  width: 100%;
-  overflow-x: auto;
-
   table {
     border-spacing: 0;
     border-collapse: separate;
     width: 100%;
+  }
+
+  .rc-table-container {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .rc-table-content {
+    overflow-x: auto;
   }
 
   .rc-table-cell {

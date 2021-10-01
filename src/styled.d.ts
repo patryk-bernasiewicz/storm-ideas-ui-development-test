@@ -36,5 +36,15 @@ declare module 'styled-components' {
       default: number;
       bold: number;
     };
+    layout: {
+      sidebarWidth: number;
+      contentPadding: {
+        mobile: { x: number; y: number };
+        desktop: { x: number; y: number };
+      };
+    };
+    breakpoints: {
+      desktop: string;
+    };
   }
 }

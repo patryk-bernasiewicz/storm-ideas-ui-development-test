@@ -17,7 +17,7 @@ export const ContentWrapper = styled.div`
   background: ${({ theme }) => theme.palette.gray50};
   flex: 1;
   padding: 20px 16px;
-  width: 100%;
+  width: calc(100% - ${({ theme }) => theme.layout.sidebarWidth}px);
 
   @media (min-width: 768px) {
     border-radius: 16px;

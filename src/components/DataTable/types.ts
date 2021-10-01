@@ -17,6 +17,7 @@ export interface Row<T> {
 export interface TableParams {
   currentPage: number;
   perPage: number;
+  search?: string;
 }
 
 export interface Action {

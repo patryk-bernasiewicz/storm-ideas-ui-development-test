@@ -10,12 +10,14 @@ import { DateCell } from './DateCell/DateCell';
 interface DataTableProps {
   fetchData: (params: TableParams) => Promise<any>;
   columns: Column[];
+  searchText?: string;
   rowKeyPrefix?: string;
 }
 
 const DataTable: FC<DataTableProps> = ({
   fetchData,
   rowKeyPrefix = 'data-table',
+  searchText,
   ...tableProps
 }) => {
   const [isLoading, setLoading] = useState(true);
@@ -30,7 +32,7 @@ const DataTable: FC<DataTableProps> = ({
     if (!fetchData) return;
 
     setLoading(true);
-    fetchData(pagination)
+    fetchData({ ...pagination, search: searchText })
       .then((response) => {
         const { data, meta } = response;
         setData(data);
@@ -42,7 +44,7 @@ const DataTable: FC<DataTableProps> = ({
         console.error('Error!', error);
       })
       .finally(() => setLoading(false));
-  }, [fetchData, pagination, setTotalPages]);
+  }, [fetchData, pagination, setTotalPages, searchText]);
 
   const handlePageChange = (currentPage: number) => {
     setPagination((prevState) => ({ ...prevState, currentPage }));

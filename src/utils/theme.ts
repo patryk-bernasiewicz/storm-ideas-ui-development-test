@@ -34,4 +34,14 @@ export const defaultTheme: DefaultTheme = {
     bold: 600,
     light: 300,
   },
+  layout: {
+    sidebarWidth: 228,
+    contentPadding: {
+      mobile: { x: 16, y: 20 },
+      desktop: { x: 30, y: 24 },
+    },
+  },
+  breakpoints: {
+    desktop: 'min-width: 768px',
+  },
 };

@@ -1,12 +1,15 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 import { ReactComponent as DeleteIcon } from 'svg/delete.svg';
 import { ReactComponent as EditIcon } from 'svg/edit.svg';
-import DataTable, { Action } from 'components/DataTable/DataTable';
+import { Action } from 'components/DataTable/DataTable';
 import { fetchStories, createColumns } from './config';
 import { StoryModel } from './types';
+import { StyledSearch, StyledTable } from './styled';
 
 const Stories: FC = () => {
+  const [searchText, setSearchText] = useState('');
+
   const actions: Action[] = [
     {
       key: 'delete',
@@ -31,11 +34,17 @@ const Stories: FC = () => {
   const columns = createColumns(actions);
 
   return (
-    <DataTable
-      rowKeyPrefix="stories"
-      columns={columns}
-      fetchData={fetchStories}
-    />
+    <>
+      <div>
+        <StyledSearch label="Search Stories" onSearch={setSearchText} />
+      </div>
+      <StyledTable
+        rowKeyPrefix="stories"
+        columns={columns}
+        fetchData={fetchStories}
+        searchText={searchText}
+      />
+    </>
   );
 };
 

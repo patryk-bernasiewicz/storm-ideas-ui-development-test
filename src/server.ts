@@ -48,13 +48,17 @@ export function makeServer() {
       this.get('/stories', (schema: AppSchema, request: Request) => {
         const { queryParams } = request;
 
+        const stories = queryParams.search.length
+          ? schema.where('story', (story: any) =>
+              story.title.toLowerCase().includes(queryParams.search)
+            )
+          : schema.all('story');
+
         const currentPage = parseInt(queryParams.currentPage) || 1;
         const perPage = parseInt(queryParams.perPage) || 10;
 
         const start = perPage * (currentPage - 1);
         const end = start + perPage;
-
-        const stories = schema.all('story');
 
         return {
           data: stories.models.slice(start, end),
