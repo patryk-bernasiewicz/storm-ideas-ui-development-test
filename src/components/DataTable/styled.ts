@@ -57,7 +57,3 @@ export const StyledTable = styled(Table)<{ isLoading?: boolean }>`
       pointer-events: none;
     `}
 `;
-
-export const DateCell = styled.div`
-  white-space: nowrap;
-`;

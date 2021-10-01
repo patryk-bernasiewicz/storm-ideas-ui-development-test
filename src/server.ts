@@ -71,17 +71,33 @@ export function makeServer() {
         title: () => faker.lorem.words(randomBetween(4, 8)),
         pages: () => createPages(randomBetween(2, 7)),
         lastModified: () => faker.date.recent(30),
-        status: () =>
-          faker.random.arrayElement([
-            StatusValue.Draft,
-            StatusValue.Live,
-            StatusValue.Past,
-            StatusValue.Scheduled,
-          ]),
-        liveFrom: () =>
-          Math.round(Math.random()) > 0.8 ? faker.date.recent(5) : undefined,
-        ends: () =>
-          Math.round(Math.random()) > 0.8 ? faker.date.recent(5) : undefined,
+        liveFrom() {
+          return Math.random() > 0.3
+            ? faker.date.recent(randomBetween(3, 8))
+            : undefined;
+        },
+        ends() {
+          const endDate =
+            Math.random() > 0.3 ? faker.date.past(2) : faker.date.future(1);
+          return this.liveFrom
+            ? faker.date.between(this.liveFrom as Date, endDate)
+            : undefined;
+        },
+        status() {
+          if (!this.liveFrom) {
+            return StatusValue.Draft;
+          }
+
+          if ((this.liveFrom as Date).getTime() > Date.now()) {
+            return StatusValue.Scheduled;
+          }
+
+          if (this.ends && (this.ends as Date).getTime() >= Date.now()) {
+            return StatusValue.Live;
+          }
+
+          return StatusValue.Past;
+        },
       }),
     },
   });

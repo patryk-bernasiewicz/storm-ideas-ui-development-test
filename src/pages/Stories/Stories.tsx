@@ -30,7 +30,13 @@ const Stories: FC = () => {
   ];
   const columns = createColumns(actions);
 
-  return <DataTable columns={columns} fetchData={fetchStories} />;
+  return (
+    <DataTable
+      rowKeyPrefix="stories"
+      columns={columns}
+      fetchData={fetchStories}
+    />
+  );
 };
 
 export default Stories;

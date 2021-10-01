@@ -7,13 +7,9 @@ import { getEndpoint } from 'utils/api';
 import { Actions } from 'components/DataTable/Actions/Actions';
 import { StatusValue } from 'utils/types';
 import Status from 'components/Status/Status';
-import { format } from 'date-fns';
 import { PagesCell } from './PagesCell/PagesCell';
 import { StoryModel } from './types';
 import { TitleCell } from './TitleCell/TitleCell';
-import { EmptyCell } from 'components/DataTable/EmptyCell/EmptyCell';
-
-const DATE_FORMAT_STR = 'LLL dd, K:mm a';
 
 export const createColumns = (actions: any[]): Column[] => {
   return [
@@ -33,9 +29,7 @@ export const createColumns = (actions: any[]): Column[] => {
       key: 'lastModified',
       dataIndex: 'lastModified',
       title: 'Last Modified',
-      render: (value: string) => (
-        <DateCell>{format(new Date(value), DATE_FORMAT_STR)}</DateCell>
-      ),
+      render: (value: string) => <DateCell value={value} />,
     },
     {
       key: 'status',
@@ -47,19 +41,13 @@ export const createColumns = (actions: any[]): Column[] => {
       key: 'liveFrom',
       dataIndex: 'liveFrom',
       title: 'Live From',
-      render: (value: string) => {
-        if (!value) return <EmptyCell />;
-        return <DateCell>{format(new Date(value), DATE_FORMAT_STR)}</DateCell>;
-      },
+      render: (value: string) => <DateCell value={value} />,
     },
     {
       key: 'ends',
       dataIndex: 'ends',
       title: 'Ends',
-      render: (value: string) => {
-        if (!value) return <EmptyCell />;
-        return <DateCell>{format(new Date(value), DATE_FORMAT_STR)}</DateCell>;
-      },
+      render: (value: string) => <DateCell value={value} />,
     },
     {
       key: 'actions',

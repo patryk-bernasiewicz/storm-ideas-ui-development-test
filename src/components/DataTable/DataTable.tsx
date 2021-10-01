@@ -1,24 +1,21 @@
 import React, { FC, useEffect, useState } from 'react';
 
 import { Column } from './types';
-import { StyledTable as Table, DateCell } from './styled';
+import { StyledTable as Table } from './styled';
 import { TableFooter } from './TableFooter/TableFooter';
 import { DEFAULT_PER_PAGE } from './config';
 import { TableParams, Action } from './types';
+import { DateCell } from './DateCell/DateCell';
 
 interface DataTableProps {
   fetchData: (params: TableParams) => Promise<any>;
   columns: Column[];
-  rowKey?: string;
+  rowKeyPrefix?: string;
 }
 
-export type { Action, TableParams };
-
-export { DateCell };
-
 const DataTable: FC<DataTableProps> = ({
-  rowKey = 'data-table',
   fetchData,
+  rowKeyPrefix = 'data-table',
   ...tableProps
 }) => {
   const [isLoading, setLoading] = useState(true);
@@ -35,10 +32,6 @@ const DataTable: FC<DataTableProps> = ({
     setLoading(true);
     fetchData(pagination)
       .then((response) => {
-        console.log(
-          `====== data: (page ${pagination.currentPage}): `,
-          response.data
-        );
         const { data, meta } = response;
         setData(data);
         if (meta && meta.totalPages) {
@@ -59,10 +52,14 @@ const DataTable: FC<DataTableProps> = ({
     setPagination((prevState) => ({ ...prevState, perPage }));
   };
 
+  const getRowKey = (prefix: string) => (record: any) => {
+    return `${prefix}-${record.id || record.key}`;
+  };
+
   return (
     <Table
       {...tableProps}
-      rowKey={rowKey}
+      rowKey={getRowKey(rowKeyPrefix)}
       isLoading={isLoading}
       data={data}
       footer={() => (
@@ -78,3 +75,6 @@ const DataTable: FC<DataTableProps> = ({
 };
 
 export default DataTable;
+
+export type { Action, TableParams };
+export { DateCell };
