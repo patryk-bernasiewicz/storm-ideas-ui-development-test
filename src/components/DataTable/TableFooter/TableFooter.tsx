@@ -12,22 +12,21 @@ interface TableFooterProps {
   onPageChange: (page: number) => void;
   onPerPageChange: (perPage: number) => void;
   pagination: TableParams;
+  totalPages: number;
 }
 
 export const TableFooter: FC<TableFooterProps> = ({
   onPageChange,
   onPerPageChange,
   pagination,
+  totalPages,
 }) => {
-  const { currentPage, totalPages } = pagination;
+  const { currentPage } = pagination;
 
   const handlePageInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = Number(event.target.value);
     if (value) {
-      const normalizedValue = Math.max(
-        0,
-        Math.min(value, pagination.totalPages)
-      );
+      const normalizedValue = Math.max(0, Math.min(value, totalPages));
       onPerPageChange(normalizedValue);
     }
   };
@@ -40,7 +39,7 @@ export const TableFooter: FC<TableFooterProps> = ({
   };
 
   const handleNextPage = () => {
-    if (pagination.currentPage >= pagination.totalPages) {
+    if (pagination.currentPage >= totalPages) {
       return;
     }
     onPageChange(pagination.currentPage + 1);
@@ -62,7 +61,7 @@ export const TableFooter: FC<TableFooterProps> = ({
         value={pagination.currentPage}
         onChange={handlePageInputChange}
       />
-      of {pagination.totalPages}
+      of {totalPages}
       <Select onChange={handlePerPageChange}>
         {PER_PAGE.map((value) => (
           <option key={value} value={value}>

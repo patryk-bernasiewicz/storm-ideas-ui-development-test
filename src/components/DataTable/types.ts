@@ -1,15 +1,30 @@
+import { ElementType, ReactNode } from 'react';
 import { FixedType } from 'rc-table/lib/interface';
-import { ReactNode } from 'react';
 
 export interface Column {
   key: string;
   dataIndex: string;
   title: string;
-  render?: (value: any) => ReactNode;
+  render?: (value: any, row: any) => ReactNode;
   fixed?: FixedType;
   width?: number;
 }
 
 export interface Row<T> {
   [key: string]: T;
+}
+
+export interface TableParams {
+  currentPage: number;
+  perPage: number;
+}
+
+export interface Action {
+  key: string;
+  title: string;
+  kind?: 'default' | 'red';
+  icon?: ElementType;
+  iconOnly?: boolean;
+  onClick: (row: any) => void;
+  outlined?: boolean;
 }

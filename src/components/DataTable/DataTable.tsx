@@ -1,42 +1,55 @@
 import React, { FC, useEffect, useState } from 'react';
 
 import { Column } from './types';
-import { StyledTable as Table } from './styled';
+import { StyledTable as Table, DateCell } from './styled';
 import { TableFooter } from './TableFooter/TableFooter';
+import { DEFAULT_PER_PAGE } from './config';
+import { TableParams, Action } from './types';
 
 interface DataTableProps {
-  fetchData: (params: Pagination) => Promise<any>;
+  fetchData: (params: TableParams) => Promise<any>;
   columns: Column[];
+  rowKey?: string;
 }
 
-interface Pagination {
-  currentPage: number;
-  totalPages: number;
-  perPage: number;
-}
+export type { Action, TableParams };
 
-export type TableParams = Pagination;
+export { DateCell };
 
-const DataTable: FC<DataTableProps> = ({ fetchData, ...tableProps }) => {
+const DataTable: FC<DataTableProps> = ({
+  rowKey = 'data-table',
+  fetchData,
+  ...tableProps
+}) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  const [pagination, setPagination] = useState<Pagination>({
+  const [pagination, setPagination] = useState<TableParams>({
     currentPage: 1,
-    totalPages: 18,
-    perPage: 10,
+    perPage: DEFAULT_PER_PAGE,
   });
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
+    if (!fetchData) return;
+
     setLoading(true);
     fetchData(pagination)
-      .then(({ data }) => {
+      .then((response) => {
+        console.log(
+          `====== data: (page ${pagination.currentPage}): `,
+          response.data
+        );
+        const { data, meta } = response;
         setData(data);
+        if (meta && meta.totalPages) {
+          setTotalPages(meta.totalPages);
+        }
       })
       .catch((error) => {
         console.error('Error!', error);
       })
       .finally(() => setLoading(false));
-  }, [fetchData, pagination]);
+  }, [fetchData, pagination, setTotalPages]);
 
   const handlePageChange = (currentPage: number) => {
     setPagination((prevState) => ({ ...prevState, currentPage }));
@@ -49,11 +62,13 @@ const DataTable: FC<DataTableProps> = ({ fetchData, ...tableProps }) => {
   return (
     <Table
       {...tableProps}
+      rowKey={rowKey}
       isLoading={isLoading}
       data={data}
       footer={() => (
         <TableFooter
           pagination={pagination}
+          totalPages={totalPages}
           onPageChange={handlePageChange}
           onPerPageChange={handlePerPageChange}
         />

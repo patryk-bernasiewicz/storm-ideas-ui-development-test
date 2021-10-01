@@ -5,19 +5,31 @@ import { ModelDefinition } from 'miragejs/-types';
 import Schema from 'miragejs/orm/schema';
 import randomBetween from 'utils/randomBetween';
 
+const API_URL = process.env.REACT_APP_API_URL || 'localhost';
+const NAMESPACE = process.env.REACT_APP_API_NAMESPACE || 'api';
+
 type Story = {
   title: string;
   pages: string[];
   lastModified: Date;
   status: StatusValue;
-  liveFrom: Date;
-  ends: Date;
+  liveFrom: Date | undefined;
+  ends: Date | undefined;
 };
 
 const StoryModel: ModelDefinition<Story> = Model.extend({});
 
 type AppRegistry = Registry<{ story: typeof StoryModel }, any>;
 type AppSchema = Schema<AppRegistry>;
+
+let pages = 0;
+const createPages = (length: number) => {
+  const arr = new Array(length)
+    .fill(null)
+    .map((_, index) => `http://placekitten.com/100/50?image=${pages + index}`);
+  pages += 1;
+  return arr;
+};
 
 export function makeServer() {
   const server = createServer({
@@ -30,8 +42,8 @@ export function makeServer() {
     },
 
     routes() {
-      this.namespace = 'api';
-      this.urlPrefix = 'https://my.api.com';
+      this.namespace = NAMESPACE;
+      this.urlPrefix = API_URL;
 
       this.get('/stories', (schema: AppSchema, request: Request) => {
         const { queryParams } = request;
@@ -56,19 +68,20 @@ export function makeServer() {
 
     factories: {
       story: Factory.extend<Story>({
-        title: faker.lorem.words(randomBetween(4, 8)),
-        pages: new Array(randomBetween(1, 3))
-          .fill(null)
-          .map((_, index) => `http://placekitten.com/200/300?i=${index}`),
-        lastModified: faker.date.recent(30),
-        status: faker.random.arrayElement([
-          StatusValue.Draft,
-          StatusValue.Live,
-          StatusValue.Past,
-          StatusValue.Scheduled,
-        ]),
-        liveFrom: faker.date.recent(5),
-        ends: faker.date.future(1),
+        title: () => faker.lorem.words(randomBetween(4, 8)),
+        pages: () => createPages(randomBetween(2, 7)),
+        lastModified: () => faker.date.recent(30),
+        status: () =>
+          faker.random.arrayElement([
+            StatusValue.Draft,
+            StatusValue.Live,
+            StatusValue.Past,
+            StatusValue.Scheduled,
+          ]),
+        liveFrom: () =>
+          Math.round(Math.random()) > 0.8 ? faker.date.recent(5) : undefined,
+        ends: () =>
+          Math.round(Math.random()) > 0.8 ? faker.date.recent(5) : undefined,
       }),
     },
   });

@@ -2,6 +2,9 @@ import styled, { css } from 'styled-components';
 import Table from 'rc-table';
 
 export const StyledTable = styled(Table)<{ isLoading?: boolean }>`
+  width: 100%;
+  overflow-x: auto;
+
   table {
     border-spacing: 0;
     border-collapse: separate;
@@ -53,4 +56,8 @@ export const StyledTable = styled(Table)<{ isLoading?: boolean }>`
       opacity: 0.5;
       pointer-events: none;
     `}
+`;
+
+export const DateCell = styled.div`
+  white-space: nowrap;
 `;

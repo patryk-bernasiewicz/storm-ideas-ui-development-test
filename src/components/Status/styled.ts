@@ -7,7 +7,7 @@ export const StyledStatus = styled.div<{ color: StatusColor }>`
   justify-content: center;
   align-items: center;
   border-radius: ${({ theme }) => theme.borderRadius};
-  padding: 0 12px;
+  padding: 2px 12px 0;
   font-size: ${({ theme }) => theme.fontSizes.tiny};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   height: 16px;

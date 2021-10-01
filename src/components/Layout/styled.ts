@@ -4,7 +4,7 @@ export const LayoutBackground = styled.div`
   background: ${({ theme }) => theme.palette.gray800};
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100%;
 `;
 
 export const MainWrapper = styled.div`
@@ -17,6 +17,7 @@ export const ContentWrapper = styled.div`
   background: ${({ theme }) => theme.palette.gray50};
   flex: 1;
   padding: 20px 16px;
+  width: 100%;
 
   @media (min-width: 768px) {
     border-radius: 16px;
