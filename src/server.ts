@@ -47,10 +47,11 @@ export function makeServer() {
 
       this.get('/stories', (schema: AppSchema, request: Request) => {
         const { queryParams } = request;
-        const page = parseInt(queryParams.page) || 1;
+
+        const currentPage = parseInt(queryParams.currentPage) || 1;
         const perPage = parseInt(queryParams.perPage) || 10;
 
-        const start = perPage * (page - 1);
+        const start = perPage * (currentPage - 1);
         const end = start + perPage;
 
         const stories = schema.all('story');
@@ -58,7 +59,7 @@ export function makeServer() {
         return {
           data: stories.models.slice(start, end),
           meta: {
-            page,
+            currentPage,
             perPage,
             totalPages: Math.ceil(stories.models.length / perPage),
           },
@@ -68,7 +69,7 @@ export function makeServer() {
 
     factories: {
       story: Factory.extend<Story>({
-        title: () => faker.lorem.words(randomBetween(4, 8)),
+        title: () => faker.lorem.words(randomBetween(3, 5)),
         pages: () => createPages(randomBetween(2, 7)),
         lastModified: () => faker.date.recent(30),
         liveFrom() {
