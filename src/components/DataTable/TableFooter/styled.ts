@@ -5,7 +5,7 @@ export const Footer = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.small};
   justify-content: flex-end;
   align-items: center;
-  padding: 46px 0 16px;
+  padding: 46px 24px 16px;
 `;
 
 const SharedStyles = css`
