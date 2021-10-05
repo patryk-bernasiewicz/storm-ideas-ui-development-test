@@ -22,6 +22,7 @@ export interface TableParams {
   perPage: number;
   search?: string;
   filters?: Filters;
+  sorting?: Sorting;
 }
 
 export interface Action {

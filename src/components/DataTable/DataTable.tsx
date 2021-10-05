@@ -9,11 +9,7 @@ import { DateCell } from './DateCell/DateCell';
 import { HeaderCell } from './HeaderCell/HeaderCell';
 
 interface DataTableProps {
-  fetchData: (
-    params: TableParams,
-    search?: string,
-    filters?: Filters
-  ) => Promise<any>;
+  fetchData: (params: TableParams, search?: string) => Promise<any>;
   columns: Column[];
   searchText?: string;
   rowKeyPrefix?: string;
@@ -66,11 +62,9 @@ const DataTable: FC<DataTableProps> = ({
 
     setLoading(true);
 
-    fetchData({
-      ...pagination,
-      search: searchText,
-      filters,
-    })
+    const params = { ...pagination, filters, sorting };
+
+    fetchData({ ...params, search: searchText })
       .then((response) => {
         const { data, meta } = response;
         setData(data);
@@ -84,7 +78,15 @@ const DataTable: FC<DataTableProps> = ({
         console.error('Error!', error);
       })
       .finally(() => setLoading(false));
-  }, [fetchData, pagination, setTotalPages, searchText, filters, onMetaUpdate]);
+  }, [
+    fetchData,
+    pagination,
+    setTotalPages,
+    searchText,
+    filters,
+    onMetaUpdate,
+    sorting,
+  ]);
 
   const handlePageChange = (currentPage: number) => {
     setPagination((prevState) => ({ ...prevState, currentPage }));

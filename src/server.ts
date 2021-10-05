@@ -68,21 +68,46 @@ export function makeServer() {
           return !conditions.includes(false);
         });
 
+        const sortColumn = queryParams['sorting[column]'] as string;
+        const sortDirection = queryParams['sorting[direction]'] as string;
+
+        const sortedStories = queryParams['sorting[column]']
+          ? stories.models.sort((storyA: any, storyB: any) => {
+              const direction = sortDirection === 'ASC' ? -1 : 1;
+
+              if (!storyA[sortColumn] || !storyB[sortColumn]) {
+                return 0;
+              }
+
+              if (storyA[sortColumn] && !storyB[sortColumn]) {
+                return 1 * direction;
+              }
+
+              if (!storyA[sortColumn] && storyB[sortColumn]) {
+                return -1 * direction;
+              }
+
+              return (
+                (storyA[sortColumn] < storyB[sortColumn] ? 1 : -1) * direction
+              );
+            })
+          : stories.models;
+
         const currentPage = parseInt(queryParams.currentPage) || 1;
         const perPage = parseInt(queryParams.perPage) || 10;
 
         const start = perPage * (currentPage - 1);
         const end = start + perPage;
 
-        const chunk = stories.models.slice(start, end);
+        const chunk = sortedStories.slice(start, end);
 
         return {
           data: chunk,
           meta: {
             currentPage,
             perPage,
-            totalPages: Math.ceil(stories.models.length / perPage),
-            totalItems: stories.length,
+            totalPages: Math.ceil(sortedStories.length / perPage),
+            totalItems: sortedStories.length,
             displayedItems: chunk.length,
             start: start + 1,
             end,
