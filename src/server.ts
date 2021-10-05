@@ -74,12 +74,18 @@ export function makeServer() {
         const start = perPage * (currentPage - 1);
         const end = start + perPage;
 
+        const chunk = stories.models.slice(start, end);
+
         return {
-          data: stories.models.slice(start, end),
+          data: chunk,
           meta: {
             currentPage,
             perPage,
             totalPages: Math.ceil(stories.models.length / perPage),
+            totalItems: stories.length,
+            displayedItems: chunk.length,
+            start: start + 1,
+            end,
           },
         };
       });

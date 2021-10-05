@@ -32,3 +32,12 @@ export interface Action {
   onClick: (row: any) => void;
   outlined?: boolean;
 }
+
+export interface Meta {
+  currentPage: number;
+  perPage: number;
+  totalItems: number;
+  totalPages: number;
+  start: number;
+  end: number;
+}

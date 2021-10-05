@@ -14,7 +14,8 @@ export const StyledInput = styled.input`
   height: 34px;
   padding: 10px 12px;
   font-size: ${({ theme }) => theme.fontSizes.small};
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 80px;
 
   ::placeholder,
   :-ms-input-placeholder,

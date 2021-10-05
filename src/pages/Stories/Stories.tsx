@@ -1,47 +1,39 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useMemo, useState } from 'react';
 
-import Select, { SelectItem, SelectProps } from 'components/Select/Select';
-import { Action } from 'components/DataTable/DataTable';
-import { ReactComponent as DeleteIcon } from 'svg/delete.svg';
-import { ReactComponent as EditIcon } from 'svg/edit.svg';
+import { SelectItem, SelectProps } from 'components/Select/Select';
 
-import { fetchStories, createColumns } from './config';
-import { StoryModel } from './types';
-import { StyledSearch, StyledTable } from './styled';
+import { fetchStories } from './config';
+import {
+  StoriesSearch,
+  StoriesTable,
+  MetaWrapper,
+  Header,
+  StatusSelect,
+} from './styled';
 import { StatusValue } from 'utils/types';
-import { Filters } from 'components/DataTable/types';
+import { Filters, Meta } from 'components/DataTable/types';
+import { createColumns } from './config';
+
+const columns = createColumns();
 
 const Stories: FC = () => {
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusValue | null>(null);
+  const [meta, setMeta] = useState<Meta>();
 
-  const actions: Action[] = [
-    {
-      key: 'delete',
-      title: 'Delete',
-      onClick: (row: StoryModel) => {
-        alert('Delete row ID: ' + row.id);
-      },
-      icon: DeleteIcon,
-      iconOnly: true,
-      outlined: true,
-      kind: 'red',
-    },
-    {
-      key: 'edit',
-      title: 'Edit',
-      onClick: (row: StoryModel) => {
-        alert('Edit row ID: ' + row.id);
-      },
-      icon: EditIcon,
-    },
-  ];
-  const columns = createColumns(actions);
+  const activeFilters = useMemo<Filters>(() => {
+    return {
+      [columns[3].key]: [statusFilter as string],
+    };
+  }, [statusFilter]);
 
-  const handleStatusSelect = (item: SelectItem | null) => {
-    const status = (item?.value as StatusValue) || null;
-    setStatusFilter(status);
-  };
+  const handleStatusSelect = useCallback(
+    (item: SelectItem | null) => {
+      const status = (item?.value as StatusValue) || null;
+      setStatusFilter(status);
+    },
+    [setStatusFilter]
+  );
 
   const statusOptions: SelectProps['items'] = [
     { label: 'All Statuses', value: '' },
@@ -51,15 +43,18 @@ const Stories: FC = () => {
     { label: StatusValue.Scheduled, value: StatusValue.Scheduled },
   ];
 
-  const activeFilters: Filters = {
-    [columns[3].key]: [statusFilter as string],
-  };
+  const handleMetaUpdate = useCallback(
+    (meta: any) => {
+      setMeta(meta);
+    },
+    [setMeta]
+  );
 
   return (
     <>
-      <div>
-        <StyledSearch label="Search Stories" onSearch={setSearchText} />
-        <Select
+      <Header>
+        <StoriesSearch label="Search Stories" onSearch={setSearchText} />
+        <StatusSelect
           label="Filter by status"
           id="status-select"
           items={statusOptions}
@@ -67,13 +62,19 @@ const Stories: FC = () => {
           onChange={handleStatusSelect}
           initialSelectedItem={statusOptions[0]}
         />
-      </div>
-      <StyledTable
+        {meta && (
+          <MetaWrapper>
+            Showing {meta.start} to {meta.end} of {meta.totalItems}
+          </MetaWrapper>
+        )}
+      </Header>
+      <StoriesTable
         rowKeyPrefix="stories"
         columns={columns}
         fetchData={fetchStories}
         searchText={searchText}
         filters={activeFilters}
+        onMetaUpdate={handleMetaUpdate}
       />
     </>
   );

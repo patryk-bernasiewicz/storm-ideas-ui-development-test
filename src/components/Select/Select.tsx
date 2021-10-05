@@ -17,13 +17,21 @@ export interface SelectItem {
 }
 
 export type SelectProps = DownshiftProps<SelectItem> & {
+  className?: string;
   id: string;
   label: string;
   emptyText: string;
   items: SelectItem[];
 };
 
-const Select: FC<SelectProps> = ({ id, label, emptyText, items, ...props }) => {
+const Select: FC<SelectProps> = ({
+  className,
+  id,
+  label,
+  emptyText,
+  items,
+  ...props
+}) => {
   return (
     <Downshift {...props} itemToString={(item) => (item && item.label) || ''}>
       {({
@@ -37,6 +45,7 @@ const Select: FC<SelectProps> = ({ id, label, emptyText, items, ...props }) => {
         getRootProps,
       }) => (
         <SelectWrapper
+          className={className}
           {...getRootProps({ refKey: id }, { suppressRefError: true })}
           {...getToggleButtonProps().onClick}
         >

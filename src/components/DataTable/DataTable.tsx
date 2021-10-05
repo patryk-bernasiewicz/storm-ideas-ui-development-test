@@ -17,6 +17,7 @@ interface DataTableProps {
   searchText?: string;
   rowKeyPrefix?: string;
   filters?: Filters;
+  onMetaUpdate?: (meta: any) => void;
 }
 
 const DataTable: FC<DataTableProps> = ({
@@ -24,6 +25,7 @@ const DataTable: FC<DataTableProps> = ({
   rowKeyPrefix = 'data-table',
   searchText,
   filters,
+  onMetaUpdate,
   ...tableProps
 }) => {
   const [isLoading, setLoading] = useState(true);
@@ -50,12 +52,14 @@ const DataTable: FC<DataTableProps> = ({
         if (meta && meta.totalPages) {
           setTotalPages(meta.totalPages);
         }
+
+        onMetaUpdate && onMetaUpdate(meta);
       })
       .catch((error) => {
         console.error('Error!', error);
       })
       .finally(() => setLoading(false));
-  }, [fetchData, pagination, setTotalPages, searchText, filters]);
+  }, [fetchData, pagination, setTotalPages, searchText, filters, onMetaUpdate]);
 
   const handlePageChange = (currentPage: number) => {
     setPagination((prevState) => ({ ...prevState, currentPage }));

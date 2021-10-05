@@ -4,6 +4,7 @@ import { ReactComponent as RawSelectIcon } from 'svg/select.svg';
 export const SelectWrapper = styled.div`
   position: relative;
   display: inline-flex;
+  width: 100%;
 `;
 
 export const Label = styled.label`
@@ -21,6 +22,7 @@ export const Input = styled.input`
   border: 1px solid ${({ theme }) => theme.palette.gray100};
   border-radius: ${({ theme }) => theme.borderRadius};
   padding: 7px 12px;
+  width: 100%;
 `;
 
 export const Button = styled.button`
