@@ -29,18 +29,6 @@ export const StyledTable = styled(Table)<{ isLoading?: boolean }>`
     }
   }
 
-  .rc-table-thead {
-    .rc-table-cell {
-      color: ${({ theme }) => theme.palette.gray200};
-      font-size: ${({ theme }) => theme.fontSizes.small};
-      font-weight: ${({ theme }) => theme.fontWeight.bold};
-      background: none;
-      border-bottom: 1px solid ${({ theme }) => theme.palette.steelBlue};
-      padding: 9px 16px;
-      text-align: left;
-    }
-  }
-
   .rc-table-tbody {
     .rc-table-cell {
       color: ${({ theme }) => theme.palette.gray500};

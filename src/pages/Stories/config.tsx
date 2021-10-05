@@ -1,4 +1,4 @@
-import { Action } from 'components/DataTable/types';
+import { Action, Column } from 'components/DataTable/types';
 
 import { DateCell, TableParams } from 'components/DataTable/DataTable';
 import axios from 'utils/axiosInstance';
@@ -36,11 +36,12 @@ const actions: Action[] = [
   },
 ];
 
-export const createColumns = () => [
+export const createColumns = (): Column[] => [
   {
     key: 'title',
     dataIndex: 'title',
     title: 'Title',
+    sortable: true,
     render: (_: any, row: StoryModel) => <TitleCell row={row} />,
   },
   {
@@ -53,24 +54,28 @@ export const createColumns = () => [
     key: 'lastModified',
     dataIndex: 'lastModified',
     title: 'Last Modified',
+    sortable: true,
     render: (value: string) => <DateCell value={value} />,
   },
   {
     key: 'status',
     dataIndex: 'status',
     title: 'Status',
+    sortable: true,
     render: (value: StatusValue) => <Status value={value} />,
   },
   {
     key: 'liveFrom',
     dataIndex: 'liveFrom',
     title: 'Live From',
+    sortable: true,
     render: (value: string) => <DateCell value={value} />,
   },
   {
     key: 'ends',
     dataIndex: 'ends',
     title: 'Ends',
+    sortable: true,
     render: (value: string) => <DateCell value={value} />,
   },
   {

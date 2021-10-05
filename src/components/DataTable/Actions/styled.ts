@@ -39,6 +39,7 @@ export const ActionButton = styled.button<{
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  line-height: 1;
   padding: 6px 12px;
   height: 26px;
   min-width: 35px;

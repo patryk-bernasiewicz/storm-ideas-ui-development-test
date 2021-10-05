@@ -8,6 +8,7 @@ export interface Column {
   render?: (value: any, row: any) => ReactNode;
   fixed?: FixedType;
   width?: number;
+  sortable?: boolean;
 }
 
 export interface Row<T> {
@@ -40,4 +41,11 @@ export interface Meta {
   totalPages: number;
   start: number;
   end: number;
+}
+
+export type SortDirection = 'ASC' | 'DESC';
+
+export interface Sorting {
+  column: string;
+  direction: SortDirection;
 }
