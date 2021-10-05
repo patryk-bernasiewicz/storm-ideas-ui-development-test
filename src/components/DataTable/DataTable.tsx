@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 
-import { Column } from './types';
+import { Column, Filters } from './types';
 import { StyledTable as Table } from './styled';
 import { TableFooter } from './TableFooter/TableFooter';
 import { DEFAULT_PER_PAGE } from './config';
@@ -8,16 +8,22 @@ import { TableParams, Action } from './types';
 import { DateCell } from './DateCell/DateCell';
 
 interface DataTableProps {
-  fetchData: (params: TableParams) => Promise<any>;
+  fetchData: (
+    params: TableParams,
+    search?: string,
+    filters?: Filters
+  ) => Promise<any>;
   columns: Column[];
   searchText?: string;
   rowKeyPrefix?: string;
+  filters?: Filters;
 }
 
 const DataTable: FC<DataTableProps> = ({
   fetchData,
   rowKeyPrefix = 'data-table',
   searchText,
+  filters,
   ...tableProps
 }) => {
   const [isLoading, setLoading] = useState(true);
@@ -32,7 +38,12 @@ const DataTable: FC<DataTableProps> = ({
     if (!fetchData) return;
 
     setLoading(true);
-    fetchData({ ...pagination, search: searchText })
+
+    fetchData({
+      ...pagination,
+      search: searchText,
+      filters,
+    })
       .then((response) => {
         const { data, meta } = response;
         setData(data);
@@ -44,7 +55,7 @@ const DataTable: FC<DataTableProps> = ({
         console.error('Error!', error);
       })
       .finally(() => setLoading(false));
-  }, [fetchData, pagination, setTotalPages, searchText]);
+  }, [fetchData, pagination, setTotalPages, searchText, filters]);
 
   const handlePageChange = (currentPage: number) => {
     setPagination((prevState) => ({ ...prevState, currentPage }));

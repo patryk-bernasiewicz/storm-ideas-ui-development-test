@@ -48,11 +48,25 @@ export function makeServer() {
       this.get('/stories', (schema: AppSchema, request: Request) => {
         const { queryParams } = request;
 
-        const stories = queryParams.search.length
-          ? schema.where('story', (story: any) =>
-              story.title.toLowerCase().includes(queryParams.search)
-            )
-          : schema.all('story');
+        const stories = schema.where('story', (story: any) => {
+          const conditions = [];
+          if (queryParams.search.length) {
+            conditions.push(
+              story.title
+                .toLowerCase()
+                .includes(queryParams.search.toLowerCase())
+            );
+          }
+
+          const statuses = Array.from(queryParams['filters[status]']).filter(
+            (status) => status.length
+          );
+          if (statuses && statuses.length > 0) {
+            conditions.push(statuses.includes(story.status));
+          }
+
+          return !conditions.includes(false);
+        });
 
         const currentPage = parseInt(queryParams.currentPage) || 1;
         const perPage = parseInt(queryParams.perPage) || 10;
@@ -82,10 +96,20 @@ export function makeServer() {
             : undefined;
         },
         ends() {
+          if (!this.liveFrom) {
+            return undefined;
+          }
+
+          const liveFrom = this.liveFrom as Date;
+
+          if (liveFrom.getTime() >= new Date().getTime()) {
+            return faker.date.future(1, liveFrom);
+          }
+
           const endDate =
-            Math.random() > 0.3 ? faker.date.past(2) : faker.date.future(1);
+            Math.random() > 0.3 ? faker.date.future(1) : faker.date.past(2);
           return this.liveFrom
-            ? faker.date.between(this.liveFrom as Date, endDate)
+            ? faker.date.between(liveFrom, endDate)
             : undefined;
         },
         status() {
@@ -93,11 +117,14 @@ export function makeServer() {
             return StatusValue.Draft;
           }
 
-          if ((this.liveFrom as Date).getTime() > Date.now()) {
+          const liveFrom = this.liveFrom as Date;
+          const ends = this.ends as Date;
+
+          if (liveFrom.getTime() > new Date().getTime()) {
             return StatusValue.Scheduled;
           }
 
-          if (this.ends && (this.ends as Date).getTime() >= Date.now()) {
+          if (ends && ends.getTime() >= new Date().getTime()) {
             return StatusValue.Live;
           }
 

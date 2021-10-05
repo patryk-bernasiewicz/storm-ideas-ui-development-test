@@ -14,10 +14,13 @@ export interface Row<T> {
   [key: string]: T;
 }
 
+export type Filters = Record<string, string[]>;
+
 export interface TableParams {
   currentPage: number;
   perPage: number;
   search?: string;
+  filters?: Filters;
 }
 
 export interface Action {
