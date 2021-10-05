@@ -3,27 +3,54 @@ import styled, { css } from 'styled-components';
 import Search from 'components/Search/Search';
 import DataTable from 'components/DataTable/DataTable';
 import Select from 'components/Select/Select';
+import PageHeading from 'components/PageHeading/PageHeading';
+import Button from 'components/DataTable/Button/Button';
 
 export const Header = styled.div`
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template:
+    'heading cta'
+    'options options' auto / auto 120px;
+
   width: 100%;
   margin: 16px 0;
 
-  ${({ theme: { breakpoints, layout } }) => css`
+  ${({ theme: { breakpoints } }) => css`
     @media (${breakpoints.desktop}) {
+      grid-template:
+        'heading heading' 1fr
+        'options cta' 1fr / auto 120px;
+    }
+  `}
+`;
+
+export const StyledHeading = styled(PageHeading)`
+  grid-area: heading;
+`;
+
+export const StoriesConfig = styled.div`
+  grid-area: options;
+  display: flex;
+  align-items: center;
+
+  ${({ theme: { breakpoints } }) => css`
+    @media (${breakpoints.tablet}) {
       > * {
-        width: calc(50% - ${layout.contentPadding.desktop.x}px);
+        width: 50$;
       }
     }
   `}
 `;
 
-export const StoriesSearch = styled(Search)`
-  ${({ theme: { breakpoints, layout } }) => css`
-    width: calc(50% - ${layout.contentPadding.mobile.x}px);
+export const CtaButton = styled(Button)`
+  grid-area: cta;
+`;
 
-    @media (${breakpoints.desktop}) {
+export const StoriesSearch = styled(Search)`
+  ${({ theme: { breakpoints } }) => css`
+    width: 50%;
+
+    @media (${breakpoints.tablet}) {
       max-width: 378px;
       width: auto;
       min-width: 80px;
@@ -34,11 +61,11 @@ export const StoriesSearch = styled(Search)`
 export const StatusSelect = styled(Select)`
   margin-left: ${({ theme }) => theme.layout.contentPadding.mobile.x}px;
 
-  ${({ theme: { breakpoints, layout } }) => css`
-    width: calc(50% - ${layout.contentPadding.mobile.x}px);
+  ${({ theme: { breakpoints } }) => css`
+    width: 50%;
 
-    @media (${breakpoints.desktop}) {
-      margin-left: ${({ theme }) => theme.layout.contentPadding.desktop.x}px;
+    @media (${breakpoints.tablet}) {
+      margin-left: ${({ theme }) => theme.layout.contentPadding.tablet.x}px;
       width: auto;
     }
   `}
@@ -63,13 +90,13 @@ export const StoriesTable = styled(DataTable)`
       padding-left: ${contentPadding.mobile.x}px;
     }
 
-    @media (${breakpoints.desktop}) {
-      margin-left: -${contentPadding.desktop.x}px;
-      margin-right: -${contentPadding.desktop.x}px;
-      width: calc(100% + ${contentPadding.desktop.x * 2}px);
+    @media (${breakpoints.tablet}) {
+      margin-left: -${contentPadding.tablet.x}px;
+      margin-right: -${contentPadding.tablet.x}px;
+      width: calc(100% + ${contentPadding.tablet.x * 2}px);
 
       .rc-table-cell:first-child {
-        padding-left: ${contentPadding.desktop.x}px;
+        padding-left: ${contentPadding.tablet.x}px;
       }
     }
   `}
@@ -83,9 +110,9 @@ export const MetaWrapper = styled.div`
   letter-spacing: -0.01em;
 
   ${({ theme: { breakpoints, layout } }) => css`
-    @media (${breakpoints.desktop}) {
+    @media (${breakpoints.tablet}) {
       display: flex;
-      margin-left: ${layout.contentPadding.desktop.x}px;
+      margin-left: ${layout.contentPadding.tablet.x}px;
     }
   `}
 `;

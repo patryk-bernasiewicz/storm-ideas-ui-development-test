@@ -8,7 +8,10 @@ export const defaultTheme: DefaultTheme = {
     blue100: '#38A0B9',
     blue200: '#154E6E',
     blue500: '#008099',
-    green: '#5BA462',
+
+    green100: '#5BA462',
+    green200: '#49834E',
+
     red: '#D97059',
     steelBlue: '#DFE8EC',
 
@@ -24,6 +27,7 @@ export const defaultTheme: DefaultTheme = {
     gray800: '#232329',
   },
   fontSizes: {
+    heading: '30px',
     default: '16px',
     small: '14px',
     smaller: '12px',
@@ -31,6 +35,7 @@ export const defaultTheme: DefaultTheme = {
   },
   fontWeight: {
     default: 400,
+    medium: 500,
     bold: 600,
     light: 300,
   },
@@ -38,10 +43,11 @@ export const defaultTheme: DefaultTheme = {
     sidebarWidth: 228,
     contentPadding: {
       mobile: { x: 16, y: 20 },
-      desktop: { x: 30, y: 24 },
+      tablet: { x: 30, y: 24 },
     },
   },
   breakpoints: {
-    desktop: 'min-width: 768px',
+    tablet: 'min-width: 768px',
+    desktop: 'min-width: 1200px',
   },
 };

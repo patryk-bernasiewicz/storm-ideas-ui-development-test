@@ -9,10 +9,14 @@ import {
   MetaWrapper,
   Header,
   StatusSelect,
+  StoriesConfig,
+  CtaButton,
 } from './styled';
 import { StatusValue } from 'utils/types';
 import { Filters, Meta } from 'components/DataTable/types';
 import { createColumns } from './config';
+import PageHeading from 'components/PageHeading/PageHeading';
+import { ReactComponent as AddIcon } from 'svg/add.svg';
 
 const columns = createColumns();
 
@@ -53,20 +57,27 @@ const Stories: FC = () => {
   return (
     <>
       <Header>
-        <StoriesSearch label="Search Stories" onSearch={setSearchText} />
-        <StatusSelect
-          label="Filter by status"
-          id="status-select"
-          items={statusOptions}
-          emptyText="All statuses"
-          onChange={handleStatusSelect}
-          initialSelectedItem={statusOptions[0]}
-        />
-        {meta && (
-          <MetaWrapper>
-            Showing {meta.start} to {meta.end} of {meta.totalItems}
-          </MetaWrapper>
-        )}
+        <PageHeading>Stories</PageHeading>
+        <StoriesConfig>
+          <StoriesSearch label="Search Stories" onSearch={setSearchText} />
+          <StatusSelect
+            label="Filter by status"
+            id="status-select"
+            items={statusOptions}
+            emptyText="All statuses"
+            onChange={handleStatusSelect}
+            initialSelectedItem={statusOptions[0]}
+          />
+          {meta && (
+            <MetaWrapper>
+              Showing {meta.start} to {meta.end} of {meta.totalItems}
+            </MetaWrapper>
+          )}
+        </StoriesConfig>
+        <CtaButton type="button">
+          <AddIcon />
+          Add story
+        </CtaButton>
       </Header>
       <StoriesTable
         rowKeyPrefix="stories"

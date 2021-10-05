@@ -19,8 +19,8 @@ export const ActionButton = styled.button<{
   ${({ kind, outlined, theme }) => {
     if (!kind || kind === 'default') {
       return css`
-        --color: ${theme.palette.green};
-        --textColor: ${outlined ? theme.palette.green : theme.palette.white};
+        --color: ${theme.palette.green100};
+        --textColor: ${outlined ? theme.palette.green100 : theme.palette.white};
       `;
     }
 

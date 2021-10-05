@@ -7,7 +7,7 @@ import {
 import { Normalize } from 'styled-normalize';
 
 const GlobalStyling = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
   html {
     box-sizing: border-box;

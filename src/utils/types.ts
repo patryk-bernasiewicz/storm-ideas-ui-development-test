@@ -1,7 +1,7 @@
 export enum StatusColor {
   Gray = 'gray100',
   Blue = 'blue100',
-  Green = 'green',
+  Green = 'green100',
   Red = 'red',
 }
 

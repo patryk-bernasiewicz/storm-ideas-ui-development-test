@@ -5,7 +5,10 @@ declare module 'styled-components' {
     borderRadius: string;
     palette: {
       white: string;
-      green: string;
+
+      green100: string;
+      green200: string;
+
       red: string;
       steelBlue: string;
 
@@ -26,6 +29,7 @@ declare module 'styled-components' {
       gray800: string;
     };
     fontSizes: {
+      heading: string;
       default: string;
       small: string;
       smaller: string;
@@ -34,16 +38,18 @@ declare module 'styled-components' {
     fontWeight: {
       light: number;
       default: number;
+      medium: number;
       bold: number;
     };
     layout: {
       sidebarWidth: number;
       contentPadding: {
         mobile: { x: number; y: number };
-        desktop: { x: number; y: number };
+        tablet: { x: number; y: number };
       };
     };
     breakpoints: {
+      tablet: string;
       desktop: string;
     };
   }
