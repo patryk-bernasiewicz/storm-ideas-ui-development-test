@@ -3,7 +3,13 @@ import React, { FC } from 'react';
 import { ReactComponent as HelpIcon } from 'svg/help.svg';
 import { ReactComponent as MenuIcon } from 'svg/menu.svg';
 import { ReactComponent as MenuIconClose } from 'svg/menu-close.svg';
-import { AnchorWrapper, Logo, Container, UserOptions } from './styled';
+import {
+  AnchorWrapper,
+  Logo,
+  Container,
+  UserOptions,
+  GuideLink,
+} from './styled';
 import { MenuButton } from './MenuButton/MenuButton';
 import { UserButton } from './UserMenu/UserButton';
 
@@ -25,9 +31,9 @@ const Header: FC<HeaderProps> = ({ isMenuOpen, onMenuToggle }) => (
       <Logo aria-hidden="true" />
     </AnchorWrapper>
     <UserOptions>
-      <a href="#" aria-label="Open help">
+      <GuideLink href="#" aria-label="Open help">
         <HelpIcon aria-hidden="true" />
-      </a>
+      </GuideLink>
       <UserButton initials="PB" />
     </UserOptions>
   </Container>

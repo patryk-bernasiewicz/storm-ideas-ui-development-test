@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { ReactComponent as LogoImage } from 'svg/logo.svg';
 
@@ -16,9 +16,11 @@ export const Container = styled.header`
   align-items: center;
   padding: 9px 15px 9px 14px;
 
-  @media (min-width: 768px) {
-    padding: 11px 30px 11px 20px;
-  }
+  ${({ theme: { breakpoints } }) => css`
+    @media (${breakpoints.tablet}) {
+      padding: 11px 30px 11px 20px;
+    }
+  `}
 `;
 
 export const UserOptions = styled.div`
@@ -26,4 +28,19 @@ export const UserOptions = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin-left: auto;
+`;
+
+export const GuideLink = styled.a`
+  line-height: 0;
+  margin-right: 19px;
+
+  svg {
+    width: 19px;
+  }
+
+  ${({ theme: { breakpoints } }) => css`
+    @media (${breakpoints.tablet}) {
+      margin-right: 32px;
+    }
+  `}
 `;

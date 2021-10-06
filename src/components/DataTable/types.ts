@@ -9,6 +9,7 @@ export interface Column {
   fixed?: FixedType;
   width?: number;
   sortable?: boolean;
+  align?: 'left' | 'right' | 'center';
 }
 
 export interface Row<T> {

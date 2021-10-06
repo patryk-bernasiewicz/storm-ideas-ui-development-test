@@ -4,13 +4,29 @@ import faker from 'faker';
 
 import DataTable, { TableParams } from './DataTable';
 import { Column } from './types';
-import Status from '../../components/Status/Status';
 import { EmptyCell } from './EmptyCell/EmptyCell';
-import { StatusValue } from '../../utils/types';
+
+import Status from 'components/Status/Status';
+import { StatusValue } from 'utils/types';
 
 export default {
   title: 'Components/DataTable',
   component: DataTable,
+  argTypes: {
+    onSortChange: {
+      action: 'sort change',
+      table: { disable: true },
+    },
+    onMetaUpdate: {
+      action: 'meta update',
+      table: { disable: true },
+    },
+    rowKeyPrefix: 'table',
+    columns: { table: { disable: true } },
+    fetchData: { table: { disable: true } },
+    searchText: '',
+    filters: { table: { disable: true } },
+  },
 };
 
 const columns: Column[] = [
@@ -33,10 +49,13 @@ const columns: Column[] = [
     dataIndex: 'date_created',
     title: 'Date of creation',
     render: (date: Date) => format(date, 'LLL dd, K:mm a'),
+    sortable: true,
   },
 ];
 
 const statuses = [StatusValue.Draft, StatusValue.Live, StatusValue.Past];
+
+const totalItems = 160;
 
 const fetchData = (params: TableParams) =>
   new Promise((resolve) => {
@@ -49,7 +68,15 @@ const fetchData = (params: TableParams) =>
         address: faker.address.city(),
         date_created: faker.date.recent(5),
       }));
-      resolve({ data });
+      const meta = {
+        currentPage: params.currentPage,
+        perPage: params.perPage,
+        totalItems,
+        totalPages: Math.ceil(totalItems / params.perPage),
+        start: 1,
+        end: 10,
+      };
+      resolve({ data, meta });
     }, 1500);
   });
 

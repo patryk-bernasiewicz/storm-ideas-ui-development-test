@@ -32,6 +32,7 @@ export const SortButton = styled.button`
   font-size: inherit;
   font-weight: inherit;
   white-space: nowrap;
+  padding: 0;
 `;
 
 export const SortIndicator = styled(SortIndicatorIcon)<{
@@ -41,11 +42,12 @@ export const SortIndicator = styled(SortIndicatorIcon)<{
   margin-left: 4px;
 
   > path {
-    fill: transparent;
+    fill: ${({ theme }) => theme.palette.gray70};
+    transition: fill ${({ theme: { transition } }) => transition.default};
   }
 
   tr:hover & > path {
-    fill: ${({ theme }) => theme.palette.gray70};
+    fill: ${({ theme }) => theme.palette.gray100};
   }
 
   ${({ theme, sortDirection }) =>

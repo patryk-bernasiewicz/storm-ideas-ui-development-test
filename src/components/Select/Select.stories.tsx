@@ -23,8 +23,10 @@ export const _Default: Story<Args> = (args) => <Select {...args} />;
 _Default.args = {
   id: 'select',
   items: [
+    { label: 'Empty value', value: '' },
     { label: 'Option A', value: 'a' },
     { label: 'Option B', value: 'b' },
   ],
   label: 'Status',
+  selectedItem: { label: 'Empty value', value: '' },
 };

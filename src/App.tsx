@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 
 import GlobalStyle from 'components/StyleProvider/StyleProvider';
 import Layout from 'components/Layout/Layout';
@@ -14,7 +19,10 @@ function App() {
         <Layout navigationConfig={NAVIGATION_CONFIG}>
           <Switch>
             <Route path="/stories" component={Stories} />
-            <Route path="/">Global path</Route>
+            <Route path="/" exact>
+              <Redirect to="/stories" />
+            </Route>
+            <Route path="/*">Not implemented yet!</Route>
           </Switch>
         </Layout>
       </Router>

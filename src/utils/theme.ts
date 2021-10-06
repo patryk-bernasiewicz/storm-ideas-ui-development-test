@@ -50,4 +50,7 @@ export const defaultTheme: DefaultTheme = {
     tablet: 'min-width: 768px',
     desktop: 'min-width: 1200px',
   },
+  transition: {
+    default: '0.5s ease',
+  },
 };

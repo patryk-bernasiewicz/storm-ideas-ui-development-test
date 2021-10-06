@@ -7,16 +7,17 @@ import {
   StoriesSearch,
   StoriesTable,
   MetaWrapper,
-  Header,
   StatusSelect,
-  StoriesConfig,
-  CtaButton,
 } from './styled';
 import { StatusValue } from 'utils/types';
 import { Filters, Meta } from 'components/DataTable/types';
 import { createColumns } from './config';
-import PageHeading from 'components/PageHeading/PageHeading';
 import { ReactComponent as AddIcon } from 'svg/add.svg';
+import PageHeader, {
+  PageHeading,
+  PageOptions,
+  PageCtaButton,
+} from 'components/PageHeader/PageHeader';
 
 const columns = createColumns();
 
@@ -56,9 +57,9 @@ const Stories: FC = () => {
 
   return (
     <>
-      <Header>
+      <PageHeader>
         <PageHeading>Stories</PageHeading>
-        <StoriesConfig>
+        <PageOptions>
           <StoriesSearch label="Search Stories" onSearch={setSearchText} />
           <StatusSelect
             label="Filter by status"
@@ -73,12 +74,12 @@ const Stories: FC = () => {
               Showing {meta.start} to {meta.end} of {meta.totalItems}
             </MetaWrapper>
           )}
-        </StoriesConfig>
-        <CtaButton type="button">
+        </PageOptions>
+        <PageCtaButton type="button">
           <AddIcon />
-          Add story
-        </CtaButton>
-      </Header>
+          Add Story
+        </PageCtaButton>
+      </PageHeader>
       <StoriesTable
         rowKeyPrefix="stories"
         columns={columns}

@@ -52,5 +52,8 @@ declare module 'styled-components' {
       tablet: string;
       desktop: string;
     };
+    transition: {
+      default: string;
+    };
   }
 }

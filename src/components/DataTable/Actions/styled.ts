@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 export const ActionsWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-end;
 
   > * + * {
     margin-left: 8px;

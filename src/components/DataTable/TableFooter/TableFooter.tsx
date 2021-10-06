@@ -3,10 +3,20 @@ import React, { FC, ChangeEvent } from 'react';
 import { TableParams } from '../DataTable';
 import { PER_PAGE } from '../config';
 
-import { Footer, Input, Select, NextButton, PreviousButton } from './styled';
+import {
+  Footer,
+  InfoWrapper,
+  Input,
+  Select,
+  NextButton,
+  PreviousButton,
+  ButtonsWrapper,
+  SelectWrapper,
+} from './styled';
 
 import { ReactComponent as LeftArrowIcon } from 'svg/long-arrow-left.svg';
 import { ReactComponent as RightArrowIcon } from 'svg/long-arrow-right.svg';
+import { ReactComponent as SelectIcon } from 'svg/select.svg';
 
 interface TableFooterProps {
   onPageChange: (page: number) => void;
@@ -54,35 +64,42 @@ export const TableFooter: FC<TableFooterProps> = ({
 
   return (
     <Footer>
-      Page
-      <Input
-        type="text"
-        inputMode="numeric"
-        value={pagination.currentPage}
-        onChange={handlePageInputChange}
-      />
-      of {totalPages}
-      <Select onChange={handlePerPageChange}>
-        {PER_PAGE.map((value) => (
-          <option key={value} value={value}>
-            {value} Rows
-          </option>
-        ))}
-      </Select>
-      <PreviousButton
-        disabled={currentPage <= 1}
-        type="button"
-        onClick={handlePrevPage}
-      >
-        <LeftArrowIcon />
-      </PreviousButton>
-      <NextButton
-        disabled={currentPage >= totalPages}
-        type="button"
-        onClick={handleNextPage}
-      >
-        <RightArrowIcon />
-      </NextButton>
+      <InfoWrapper>
+        Page
+        <Input
+          type="text"
+          inputMode="numeric"
+          value={pagination.currentPage}
+          onChange={handlePageInputChange}
+        />
+        of {totalPages}
+      </InfoWrapper>
+      <SelectWrapper>
+        <Select onChange={handlePerPageChange}>
+          {PER_PAGE.map((value) => (
+            <option key={value} value={value}>
+              {value} Rows
+            </option>
+          ))}
+        </Select>
+        <SelectIcon />
+      </SelectWrapper>
+      <ButtonsWrapper>
+        <PreviousButton
+          disabled={currentPage <= 1}
+          type="button"
+          onClick={handlePrevPage}
+        >
+          <LeftArrowIcon />
+        </PreviousButton>
+        <NextButton
+          disabled={currentPage >= totalPages}
+          type="button"
+          onClick={handleNextPage}
+        >
+          <RightArrowIcon />
+        </NextButton>
+      </ButtonsWrapper>
     </Footer>
   );
 };

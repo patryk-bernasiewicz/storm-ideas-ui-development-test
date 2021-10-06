@@ -9,7 +9,8 @@ export const Backdrop = styled.div<{ isVisible: boolean }>`
   visibility: hidden;
   pointer-events: none;
   opacity: 0;
-  transition: all 0.5s ease;
+  z-index: 1;
+  transition: all ${({ theme: { transition } }) => transition.default};
 
   ${({ isVisible }) =>
     isVisible &&
@@ -39,7 +40,7 @@ export const SidebarWrapper = styled.nav<{ isVisible: boolean }>`
   width: 100%;
   max-width: ${({ theme }) => theme.layout.sidebarWidth}px;
   transform: translateX(-100%);
-  transition: transform 0.5s ease;
+  transition: transform ${({ theme: { transition } }) => transition.default};
   overflow-y: auto;
 
   ${({ isVisible }) =>
