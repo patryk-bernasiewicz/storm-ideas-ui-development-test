@@ -20,6 +20,7 @@ This React app uses following libraries:
 - MirageJS
 - Storybook
 - Faker
+- Downshift
 - date-fns
 - rc-table
 - qs
@@ -31,8 +32,8 @@ It's also built using Yarn 1 and is based on [my own CRA template](https://www.n
 Simply clone the repository using
 
 ```
-git clone <todo: fill out>
-cd <repo-name>
+git clone https://github.com/patryk-bernasiewicz/storm-ideas-ui-development-test.git
+cd storm-ideas-ui-development-test
 yarn
 ```
 
